@@ -1,0 +1,4 @@
+runtime: nodejs21
+
+env_variables:
+  MONGO_URI: 'mongodb+srv://jacob13:jacobapad@cluster0.5hlginn.mongodb.net/?retryWrites=true&w=majority'
