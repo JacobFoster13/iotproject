@@ -1,4 +1,14 @@
 runtime: nodejs21
 
-env_variables:
+env_variables:  
   MONGO_URI: 'mongodb+srv://jacob13:jacobapad@cluster0.5hlginn.mongodb.net/?retryWrites=true&w=majority'
+
+handlers:
+  # Serve all static files with url ending with a file extension
+  - url: /(.*\..+)$
+    static_files: build/\1
+    upload: build/(.*\..+)$
+  # Catch all handler to index.html
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
