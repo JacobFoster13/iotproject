@@ -39,7 +39,7 @@ app.get('/', async (req, res) => {
 
         return res.json({
             memberName: member.memberName, 
-            velos: velos.slice(-5), 
+            velos: velos.slice(-5).reverse(), 
             maxVelo: maxVelo,
             avgVelo: avgVelo
         });
