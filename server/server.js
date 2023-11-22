@@ -14,12 +14,11 @@ app.use(express.json());
 const uri = process.env.MONGO_URI;
 
 const client = new MongoClient(uri);
+const database = client.db("iotProjects");
+const members = database.collection('iotProjects');
 
 app.get('/', async (req, res) => {
     try {
-        const database = client.db("iotProjects");
-        const members = database.collection('iotProjects');
-
         const query = { memberName: "Jacob Foster"};
         const member = await members.findOne(query);
 
@@ -48,6 +47,15 @@ app.get('/', async (req, res) => {
     } catch {
         console.log('There was a fail')
     }
+})
+
+app.post("/addVelo", async (req, res) => {
+    const { newVelo } = req.body;
+    console.log(newVelo);
+
+    let result = await members.updateOne({memberName: "Jacob Foster"}, {$push: {velos: newVelo}});
+    console.log(result);
+
 })
 
 app.listen(8000, () => {

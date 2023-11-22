@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { set } from 'mongoose';
 
 const Info = () => {
 
@@ -22,21 +21,39 @@ const Info = () => {
         })
     }, [])
 
+    const handleAdd = () => {
+        console.log('hello from button')
+        axios.post('/addVelo', {
+            newVelo: 69.69
+        })
+        .then((res) => {
+            if (res.data.message === 'good') {
+                console.log('added');
+            } else {
+                console.log('fuck');
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
   return (
     <>
         <h1>This is the information page</h1>
         <h3>Member Name: {name}</h3>
-        <h3>Max Velo: {maxVelo}</h3>
-        <h3>Avg Velo: {avgVelo}</h3>
+        <h3>Max Velo: {maxVelo.toFixed(2)}</h3>
+        <h3>Avg Velo: {avgVelo.toFixed(2)}</h3>
         <h3>Last 5 Velos:</h3>
         <table>
             <thead></thead>
             <tbody>
                 {velos.map((v, index) => (
-                    <tr key={index}><td>{v}</td></tr>
+                    <tr key={index}><td>{v.toFixed(2)}</td></tr>
                 ))}
             </tbody>
         </table>
+        <button onClick={handleAdd}>Add New Velo</button>
     </>
   )
 }
