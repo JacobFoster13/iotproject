@@ -23,8 +23,10 @@ const Info = () => {
 
     const handleAdd = () => {
         console.log('hello from button')
-        axios.post('/addVelo', {
-            newVelo: 69.69
+        axios.get('/addVelo', {
+            params: {
+                newVelo: 69.69
+            }
         })
         .then((res) => {
             if (res.data.message === 'good') {

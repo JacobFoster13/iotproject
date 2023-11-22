@@ -48,8 +48,7 @@ app.get('/', async (req, res) => {
     }
 })
 
-app.post("/addVelo", async (req, res) => {
-    console.log(req);
+app.get("/addVelo", async (req, res) => {
     const { newVelo } = req.query;
 
     let result = await members.updateOne({memberName: "Jacob Foster"}, {$push: {velos: parseFloat(newVelo)}});
