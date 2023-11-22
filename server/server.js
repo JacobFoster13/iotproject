@@ -40,13 +40,13 @@ app.get('/', async (req, res) => {
 
         return res.json({
             memberName: member.memberName, 
-            velos: velos, 
+            velos: velos.slice(-5), 
             maxVelo: maxVelo,
             avgVelo: avgVelo
         });
 
-    } finally {
-        console.log('Connected to MongoDB')
+    } catch {
+        console.log('There was a fail')
     }
 })
 

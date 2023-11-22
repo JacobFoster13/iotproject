@@ -26,9 +26,17 @@ const Info = () => {
     <>
         <h1>This is the information page</h1>
         <h3>Member Name: {name}</h3>
-        <h3>Velos: {velos.length}</h3>
         <h3>Max Velo: {maxVelo}</h3>
         <h3>Avg Velo: {avgVelo}</h3>
+        <h3>Last 5 Velos:</h3>
+        <table>
+            <thead></thead>
+            <tbody>
+                {velos.map((v, index) => (
+                    <tr key={index}><td>{v}</td></tr>
+                ))}
+            </tbody>
+        </table>
     </>
   )
 }
