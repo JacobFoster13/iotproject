@@ -49,11 +49,14 @@ app.get('/', async (req, res) => {
 })
 
 app.post("/addVelo", async (req, res) => {
-    const { newVelo } = req.body;
-    console.log(newVelo);
+    const { newVelo } = req.query;
 
-    let result = await members.updateOne({memberName: "Jacob Foster"}, {$push: {velos: newVelo}});
-    console.log(result);
+    let result = await members.updateOne({memberName: "Jacob Foster"}, {$push: {velos: parseFloat(newVelo)}});
+    if (result.modifiedCount === 1) {
+        return res.json({status: "good"});
+    } else {
+        return res.json({status: "shit"});
+    }
 
 })
 
