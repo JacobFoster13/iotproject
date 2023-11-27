@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 const Info = () => {
+    let { state } = useLocation();
 
     axios.defaults.baseURL = `http://${window.location.hostname}:8000`;
     const [name, setName] = useState('');
@@ -10,15 +12,21 @@ const Info = () => {
     const [avgVelo, setAvgVelo] = useState(0);
 
     useEffect(() => {
-        axios.get('/')
-        .then((res) => {
-            if (res.status === 200) {
-                setName(res.data.memberName);
-                setVelos(res.data.velos);
-                setMaxVelo(res.data.maxVelo);
-                setAvgVelo(res.data.avgVelo);
-            }
-        })
+        if ( state !==  null) {
+            axios.get('/info', {
+                params: {
+                    memberName: state.memberName
+                }
+            })
+            .then((res) => {
+                if (res.status === 200) {
+                    setName(res.data.memberName);
+                    setVelos(res.data.velos);
+                    setMaxVelo(res.data.maxVelo);
+                    setAvgVelo(res.data.avgVelo);
+                }
+            })
+        }
     }, [])
 
   return (

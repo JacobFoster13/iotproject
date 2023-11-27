@@ -16,9 +16,10 @@ const client = new MongoClient(uri);
 const database = client.db("iotProjects");
 const members = database.collection('iotProjects');
 
-app.get('/', async (req, res) => {
+app.get('/info', async (req, res) => {
+    const { memberName } = req.query;
     try {
-        const query = { memberName: "Jacob Foster"};
+        const query = { memberName: memberName};
         const member = await members.findOne(query);
 
         let velos = member.velos;
@@ -48,9 +49,11 @@ app.get('/', async (req, res) => {
 })
 
 app.get("/addVelo", async (req, res) => {
-    const { newVelo } = req.query;
+    console.log(req.query);
+    const { newVelo, apiKey } = req.query;
 
-    let result = await members.updateOne({memberName: "Jacob Foster"}, {$push: {velos: parseFloat(newVelo)}});
+    let result = await members.updateOne({apiKey: apiKey}, {$push: {velos: parseFloat(newVelo)}});
+    console.log(result);
     if (result.modifiedCount === 1) {
         return res.json({status: "good"});
     } else {
@@ -70,12 +73,11 @@ app.get("/all", async (req, res) => {
         let avgVelo = total / doc.velos.length;
         let maxVelo = Math.max(...doc.velos);
 
-        doc.maxVelo = maxVelo;
-        doc.avgVelo = avgVelo;
+        doc.maxVelo = maxVelo.toFixed(2);
+        doc.avgVelo = avgVelo.toFixed(2);
         memberRes.push(doc);
     }
 
-    console.log(memberRes);
     return res.json(memberRes);
 })
 
