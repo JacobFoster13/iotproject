@@ -25,7 +25,6 @@ app.get('/', async (req, res) => {
         let maxVelo = 0;
         let avgVelo = 0;
 
-
         for (i=0; i < velos.length; i++) {
             velos[i] = parseFloat(velos[i]);
             if (velos[i] > maxVelo) {
@@ -58,6 +57,19 @@ app.get("/addVelo", async (req, res) => {
         return res.json({status: "shit"});
     }
 
+})
+
+app.get("/all", async (req, res) => {
+    const result = await members.find();
+    let memberRes = new Array();
+    let header = true;
+    for await (const doc of result) {
+        console.log(`doc: ${doc}`);
+        memberRes.push(doc);
+    }
+
+    console.log(memberRes);
+    return res.json(memberRes);
 })
 
 app.listen(8000, () => {

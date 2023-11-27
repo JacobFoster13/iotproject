@@ -21,41 +21,24 @@ const Info = () => {
         })
     }, [])
 
-    const handleAdd = () => {
-        console.log('hello from button')
-        axios.get('/addVelo', {
-            params: {
-                newVelo: 69.69
-            }
-        })
-        .then((res) => {
-            if (res.data.message === 'good') {
-                console.log('added');
-            } else {
-                console.log('fuck');
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-    }
-
   return (
     <>
-        <h1>This is the information page</h1>
-        <h3>Member Name: {name}</h3>
-        <h3>Max Velo: {maxVelo.toFixed(2)}</h3>
-        <h3>Avg Velo: {avgVelo.toFixed(2)}</h3>
-        <h3>Last 5 Velos:</h3>
-        <table>
-            <thead></thead>
-            <tbody>
-                {velos.map((v, index) => (
-                    <tr key={index}><td>{v.toFixed(2)}</td></tr>
-                ))}
-            </tbody>
-        </table>
-        <button onClick={handleAdd}>Add New Velo</button>
+        <div style={{margin: '1%'}}>
+            <h1>{name}'s Stats</h1>
+            <h3>Max Swing Velocity: {maxVelo.toFixed(2)} mph</h3>
+            <h3>Avg Velocity: {avgVelo.toFixed(2)} mph</h3>
+            <h3>Last 5 Swing Velocities:</h3>
+            <table style={{}}>
+                <thead></thead>
+                <tbody>
+                    {velos.map((v, index) => (
+                        <tr key={index} style={{marginBottom: '.5%'}}>
+                            <td>{v.toFixed(2)} mph  </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     </>
   )
 }
