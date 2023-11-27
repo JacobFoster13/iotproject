@@ -62,9 +62,16 @@ app.get("/addVelo", async (req, res) => {
 app.get("/all", async (req, res) => {
     const result = await members.find();
     let memberRes = new Array();
-    let header = true;
     for await (const doc of result) {
-        console.log(`doc: ${doc}`);
+        let total = 0.0;
+        for (i=0; i<doc.velos.length; i++) {
+            total += doc.velos[i];
+        }
+        let avgVelo = total / doc.velos.length;
+        let maxVelo = Math.max(...doc.velos);
+
+        doc.maxVelo = maxVelo;
+        doc.avgVelo = avgVelo;
         memberRes.push(doc);
     }
 
